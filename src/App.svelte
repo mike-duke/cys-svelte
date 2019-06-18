@@ -1,10 +1,14 @@
 <script>
   import Aside from './Aside.svelte';
-	export let name;
+  import ToDo from './ToDo.svelte';
+  let todos = []
 </script>
 
-<style>
-  
-</style>
+<style></style>
 
 <Aside/>
+<section id="todo-list">
+  {#each todos as todo (todo.id)}
+    <ToDo todo/>
+  {/each}
+</section>
