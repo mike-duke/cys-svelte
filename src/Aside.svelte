@@ -1,5 +1,7 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   let titleInput = '';
   let taskInput = '';
@@ -9,11 +11,25 @@
     document.querySelector('#title-input').focus();    
   })
 
-  const addTask = (e) => {
+  const addTask = () => {
     let element = document.querySelector('#task-input');
     taskList = [...taskList, {title: element.value, id: Date.now()}]
     taskInput = '';
     element.focus();
+  }
+
+  const makeToDo = () => {
+    console.log('hello');
+    dispatch('addToDo', {
+      title: titleInput,
+      tasks: taskList,
+      id: Date.now(),
+      urgent: false
+    });
+
+    titleInput = '';
+    taskInput = '';
+    taskList = [];
   }
 </script>
 
@@ -35,7 +51,7 @@
     <label for="task-input">Task Item</label>
     <input type="text" id="task-input" bind:value={taskInput}>
     <button on:click|preventDefault={addTask}>+</button>
-    <button>Make Task List</button>
+    <button id="make-task-button" on:click|preventDefault={makeToDo}>Make Task List</button>
     <button>Clear All</button>
     <hr>
     <button>Filter By Urgency</button>
