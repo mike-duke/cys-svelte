@@ -12,4 +12,6 @@
       <li>{task.title}</li>
     {/each}
   </ul>
+  <button>Urgent</button>
+  <button>Delete</button>
 </article>

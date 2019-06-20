@@ -34,7 +34,12 @@
 </script>
 
 <style>
-
+  aside {
+    background: #587A8A;
+    grid-area: aside;
+    padding: 10px;
+    color: lightgray;
+  }
 </style>
 
 <aside>
