@@ -30,7 +30,9 @@
     titleInput = '';
     taskInput = '';
     taskList = [];
+    document.querySelector('#title-input').focus();
   }
+  
 </script>
 
 <style>

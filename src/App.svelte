@@ -5,8 +5,7 @@
   let todos = []
 
   const addToDo = (todo) => {
-    todos = [...todos, todo.detail]
-    console.log(todos)
+    todos = [...todos, todo.detail];
   }
 
 </script>
@@ -14,6 +13,10 @@
 <style>
   #todo-list {
     grid-area: main;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: scroll;
+    background: #F3F6F7;
   }
 </style>
 
