@@ -2,10 +2,10 @@
   import Aside from './Aside.svelte';
   import ToDo from './ToDo.svelte';
   import Header from './Header.svelte';
-  let todos = []
+  let todos = [];
 
   const addToDo = (todo) => {
-    todos = [...todos, todo.detail];
+    todos = [todo.detail, ...todos];
   }
 
 </script>
@@ -18,12 +18,27 @@
     overflow: scroll;
     background: #F3F6F7;
   }
+
+  #instruction-card {
+    height: 400px;
+    width: 300px;
+    border: 8px dashed gray;
+    color: gray;
+    margin: 20px;
+    padding: 20px;
+  }
 </style>
 
 <Header />
 <Aside on:addToDo={addToDo} />
 <section id="todo-list">
-  {#each todos as todo (todo.id)}
-    <ToDo todo={todo} />
-  {/each}
+  {#if todos.length < 1}
+    <article id="instruction-card">
+      <h2>Create a ToDo with a task list using the form on the left side of the page</h2>
+    </article>
+  {:else}
+    {#each todos as todo (todo.id)}
+      <ToDo todo={todo} />
+    {/each}
+  {/if}
 </section>
