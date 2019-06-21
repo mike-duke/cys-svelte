@@ -18,21 +18,23 @@
     element.focus();
   }
 
+  const removeTask = (e) => {
+    e.target.closest('li').remove();
+  }
+
   const makeToDo = () => {
-    console.log('hello');
     dispatch('addToDo', {
       title: titleInput,
       tasks: taskList,
       id: Date.now(),
       urgent: false
     });
-
     titleInput = '';
     taskInput = '';
     taskList = [];
     document.querySelector('#title-input').focus();
   }
-  
+
 </script>
 
 <style>
@@ -41,6 +43,10 @@
     grid-area: aside;
     padding: 10px;
     color: lightgray;
+  }
+
+  ul {
+    list-style: none;
   }
 </style>
 
@@ -51,7 +57,10 @@
     <section id="task-area">
       <ul id="aside-task-list">
         {#each taskList as task (task.id)}
-          <li>{task.title}</li>
+          <li>
+            {task.title}
+            <button class="remove-task-item-button" on:click|preventDefault={removeTask}>X</button>
+          </li>
         {/each}
       </ul>
     </section>
