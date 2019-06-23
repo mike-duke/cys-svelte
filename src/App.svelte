@@ -1,11 +1,17 @@
 <script>
+  import { onMount } from 'svelte';
   import Aside from './Aside.svelte';
   import ToDo from './ToDo.svelte';
   import Header from './Header.svelte';
   let todos = [];
 
+  onMount(() => {
+    todos = JSON.parse(localStorage.getItem('cysToDos')) || [];
+  })
+
   const addToDo = (todo) => {
     todos = [todo.detail, ...todos];
+    localStorage.setItem('cysToDos', JSON.stringify(todos));
   }
 
 </script>

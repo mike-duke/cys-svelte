@@ -13,9 +13,11 @@
 
   const addTask = () => {
     let element = document.querySelector('#task-input');
-    taskList = [...taskList, {title: element.value, id: Date.now()}]
-    taskInput = '';
-    element.focus();
+    if (element.value) {
+      taskList = [...taskList, {title: element.value, id: Date.now()}]
+      taskInput = '';
+      element.focus();
+    }
   }
 
   const removeTask = (e) => {
@@ -48,6 +50,7 @@
   ul {
     list-style: none;
   }
+  
 </style>
 
 <aside>
