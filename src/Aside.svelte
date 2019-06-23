@@ -6,18 +6,32 @@
   let titleInput = '';
   let taskInput = '';
   let taskList = [];
+  let makeTaskButton;
+  let titleInputElement;
+  let taskInputElement;
 
   onMount(() => {
-    document.querySelector('#title-input').focus();    
-  })
+    titleInputElement.focus();
+    makeTaskButton.setAttribute('disabled', true);
+  });
+
+  const handleChange = () => {
+    if (titleInput && (taskInput || taskList.length)) {
+      makeTaskButton.removeAttribute('disabled');
+    } else {
+      makeTaskButton.setAttribute('disabled', true);
+    }
+  }
 
   const addTask = () => {
-    let element = document.querySelector('#task-input');
+    const element = taskInputElement
     if (element.value) {
       taskList = [...taskList, {title: element.value, id: Date.now()}]
       taskInput = '';
       element.focus();
     }
+
+    handleChange();
   }
 
   const removeTask = (e) => {
@@ -31,10 +45,16 @@
       id: Date.now(),
       urgent: false
     });
+
+    clearForm();
+  }
+
+  const clearForm = () => {
     titleInput = '';
     taskInput = '';
     taskList = [];
-    document.querySelector('#title-input').focus();
+    titleInputElement.focus();
+    handleChange();
   }
 
 </script>
@@ -50,13 +70,13 @@
   ul {
     list-style: none;
   }
-  
+
 </style>
 
 <aside>
-  <form action="">
+  <form on:keyup={handleChange}>
     <label for="title-input">ToDo Title</label>
-    <input type="text" id="title-input" bind:value={titleInput}>
+    <input type="text" id="title-input" bind:value={titleInput} bind:this={titleInputElement}>
     <section id="task-area">
       <ul id="aside-task-list">
         {#each taskList as task (task.id)}
@@ -68,10 +88,10 @@
       </ul>
     </section>
     <label for="task-input">Task Item</label>
-    <input type="text" id="task-input" bind:value={taskInput}>
+    <input type="text" id="task-input" bind:value={taskInput} bind:this={taskInputElement}>
     <button on:click|preventDefault={addTask}>+</button>
-    <button id="make-task-button" on:click|preventDefault={makeToDo}>Make Task List</button>
-    <button>Clear All</button>
+    <button id="make-task-button" on:click|preventDefault={makeToDo} bind:this={makeTaskButton}>Make Task List</button>
+    <button id="clear-all-button" on:click|preventDefault={clearForm}>Clear All</button>
     <hr>
     <button>Filter By Urgency</button>
   </form>
