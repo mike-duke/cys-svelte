@@ -9,17 +9,21 @@
   let makeTaskButton;
   let titleInputElement;
   let taskInputElement;
+  let clearAllButton;
 
   onMount(() => {
     titleInputElement.focus();
     makeTaskButton.setAttribute('disabled', true);
+    clearAllButton.setAttribute('disabled', true);
   });
 
   const handleChange = () => {
     if (titleInput && (taskInput || taskList.length)) {
       makeTaskButton.removeAttribute('disabled');
+      clearAllButton.removeAttribute('disabled');
     } else {
       makeTaskButton.setAttribute('disabled', true);
+      clearAllButton.setAttribute('disabled', true);
     }
   }
 
@@ -91,7 +95,7 @@
     <input type="text" id="task-input" bind:value={taskInput} bind:this={taskInputElement}>
     <button on:click|preventDefault={addTask}>+</button>
     <button id="make-task-button" on:click|preventDefault={makeToDo} bind:this={makeTaskButton}>Make Task List</button>
-    <button id="clear-all-button" on:click|preventDefault={clearForm}>Clear All</button>
+    <button id="clear-all-button" on:click|preventDefault={clearForm} bind:this={clearAllButton}>Clear All</button>
     <hr>
     <button>Filter By Urgency</button>
   </form>
